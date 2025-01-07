@@ -55,7 +55,7 @@ $ /opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server my-cluster-kafka-bo
 cgroup-1
 ```
 
-6. By default, Kafka producers assign messages to partitions based on the message key (which is hashed) or using round-robin assignment. In this scenario, I will simulate uneven message distribution across Kafka partitions. To achieve this, I will deploy a JupyterLab pod within the same Kafka namespace and use the following Python code to produce messages in a way that results in some partitions receiving more messages than others.
+6. By default, Kafka producers assign messages to partitions based on the message key (which is hashed) or using round-robin assignment. In this scenario, I will simulate uneven message distribution across Kafka partitions. To achieve this, I deploy a Jupyter-Notebook pod within the same Kafka namespace and run the following Python code to produce messages in a way that results in some partitions receiving more messages than others.
  
 ```
 from kafka import KafkaProducer
@@ -95,6 +95,8 @@ while True:
     count += 1
     time.sleep(0.1)  # Simulate a steady stream of messages
 ```
+<img width="1401" alt="image" src="https://github.com/user-attachments/assets/256de589-c3df-4750-8d9c-53acc59c7113" />
+
 
 7. As a result, the total offsets in each partition are uneven. The following output shows the current offsets, log end offsets, and lag for each partition, indicating that partitions 1 and 2 have messages lagging, while partition 0 has no messages consumed.
 ```
