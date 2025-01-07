@@ -3,7 +3,7 @@
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/cfba1b73-fe26-4484-8d88-b4c9eb52d502" />
 
 Kafka optimization using Cruise Control allows for intelligent resource balancing within a Kafka cluster, ensuring optimal disk, CPU, and network utilization. Cruise Control dynamically reallocates partitions across brokers to avoid hotspots, mitigate under-replication, and improve overall cluster performance. By continuously monitoring system metrics, it makes real-time adjustments, enabling more efficient message distribution, reducing consumer lag, and enhancing fault tolerance.
-In this article, I will demonstrate how Cruise Control can help readjust the underlying Kafka infrastructure to ensure the platform remains efficient and scalable.
+In this article, I will demonstrate how `Cruise Control` can help adjust the underlying Kafka infrastructure to ensure the platform remains efficient and scalable.
 
 # KafkaNodePool Cluster
 
