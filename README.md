@@ -98,7 +98,7 @@ while True:
 <img width="1401" alt="image" src="https://github.com/user-attachments/assets/256de589-c3df-4750-8d9c-53acc59c7113" />
 
 
-7. As a result, the total offsets in each partition are uneven. The following output shows the current offsets, log end offsets, and lag for each partition, indicating that partitions 1 and 2 have messages lagging, while partition 0 has no messages consumed.
+7. As a result, the total offsets in each partition are uneven. The following output shows the current offsets, log end offsets, and lag for each partition, indicating that partitions 1 and 2 have messages lagging, while partition 0 has no messages to be consumed.
 ```
 $ /opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --describe --group cgroup-1
 
