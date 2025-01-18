@@ -2,8 +2,8 @@
 
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/cfba1b73-fe26-4484-8d88-b4c9eb52d502" />
 
-Kafka optimization using Cruise Control allows for intelligent resource balancing within a Kafka cluster, ensuring optimal disk, CPU, and network utilization. Cruise Control dynamically reallocates partitions across brokers to avoid hotspots, mitigate under-replication, and improve overall cluster performance. By continuously monitoring system metrics, it makes real-time adjustments, enabling more efficient message distribution, reducing consumer lag, and enhancing fault tolerance.
-In this article, I will demonstrate how `Cruise Control` can help adjust the underlying Kafka infrastructure to ensure the platform remains efficient and scalable.
+In my previous [article](https://github.com/dennislee22/Strimzi-Prometheus), I demonstrated how Strimzi/Kafka can leverage Prometheus and Grafana for monitoring and visualizing cluster metrics, providing real-time insights into performance and health. Building on that, this article focuses on Kafka optimization using `Cruise Control`, a tool designed for intelligent resource balancing within a Kafka cluster. Cruise Control ensures optimal disk, CPU, and network utilization by leveraging anomaly detection to identify and alert on irregularities, allowing for timely intervention before issues escalate. It generates multi-goal rebalance proposals that account for factors like rack-awareness and resource capacity violations (CPU, disk, network I/O), minimizing disruption during rebalancing. Additionally, Cruise Control streamlines admin operations, such as adding, removing, and demoting brokers, to maintain a well-balanced cluster. 
+In this article, I will demonstrate how Cruise Control can efficiently handle resource balancing by adding a Kafka broker to the cluster.
 
 # KafkaNodePool Cluster
 
@@ -113,7 +113,7 @@ cgroup-1        ktopic-1        0          0               0               0    
 8. The Grafana dashboard shows that PVC storage utilization across broker pods is uneven.
 <img width="1432" alt="image" src="https://github.com/user-attachments/assets/d49009da-2558-4b10-b35b-216569e7ee47" />
 
-9. Now, let's rebalance the storage utilization across broker pods. Scale out a broker pod `my-cluster-nodepool-1-3`.
+9. Now, let's rebalance the storage utilization across broker pods. Firstly, scale out a broker pod `my-cluster-nodepool-1-3`.
 ```
 # kubectl -n dlee-kafkanodepool scale kafkanodepool nodepool-1 --replicas=4
 kafkanodepool.kafka.strimzi.io/nodepool-1 scaled
@@ -132,7 +132,7 @@ my-cluster-zookeeper-1                        1/1     Running    0             2
 my-cluster-zookeeper-2                        1/1     Running    0             28h
 ```
 
-10. Firstly, prepare the following `KafkaRebalance` in YAML format.
+10.  Prepare the following `KafkaRebalance` file.
 ```
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaRebalance
@@ -253,7 +253,7 @@ Status:
 Events:                                   <none>
 ```
 
-15. Upon successful rebalancing, note that the PVC storage utilization is now uniform across all Kafka broker stateful pods.
+15. Upon successful rebalancing, note that the PVC storage utilization is now uniform across all 4 Kafka broker stateful pods.
 <img width="1431" alt="image" src="https://github.com/user-attachments/assets/58da1206-6a33-4d38-824a-fc3b915227e0" />
 
 
