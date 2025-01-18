@@ -7,7 +7,7 @@ In this article, I will demonstrate how Cruise Control can efficiently handle re
 
 # KafkaNodePool Cluster
 
-1. A `KafkaNodePool` with a Kafka cluster has already been deployed as shown below.
+1. A `KafkaNodePool` has already been deployed as shown below.
 ```
 # kubectl -n dlee-kafkanodepool get pods
 NAME                                          READY   STATUS    RESTARTS      AGE
@@ -82,7 +82,6 @@ count = 0
 while True:
     message = {"message": f"Message number {count}"}
     
-    # Simulate uneven load by sending more messages to partition 0
     if count % 3 == 0:
         producer.send(topic_name, value=message, partition=partition_0)
     elif count % 3 == 1:
@@ -93,10 +92,9 @@ while True:
     producer.flush()
     print(f"Produced message {message['message']} to partition {count % 3}")
     count += 1
-    time.sleep(0.1)  # Simulate a steady stream of messages
+    #time.sleep(0.1)  # Simulate a steady stream of messages
 ```
-<img width="1401" alt="image" src="https://github.com/user-attachments/assets/256de589-c3df-4750-8d9c-53acc59c7113" />
-
+<img width="1024" alt="image" src="https://github.com/user-attachments/assets/8b202062-be25-4f9f-ab6f-7eb3971c17ee" />
 
 7. As a result, the total offsets in each partition are uneven. The following output shows the current offsets, log end offsets, and lag for each partition, indicating that partitions 1 and 2 have messages lagging, while partition 0 has no messages to be consumed.
 ```
@@ -110,7 +108,7 @@ cgroup-1        ktopic-1        1          0               36246           36246
 cgroup-1        ktopic-1        0          0               0               0               -               -               -
 ```
 
-8. The Grafana dashboard shows that PVC storage utilization across broker pods is uneven.
+8. The Grafana dashboard shows that persistent volume storage utilization (that stores the partition logs) across broker pods is uneven.
 <img width="1432" alt="image" src="https://github.com/user-attachments/assets/d49009da-2558-4b10-b35b-216569e7ee47" />
 
 9. Now, let's rebalance the storage utilization across broker pods. Firstly, scale out a broker pod `my-cluster-nodepool-1-3`.
@@ -253,7 +251,7 @@ Status:
 Events:                                   <none>
 ```
 
-15. Upon successful rebalancing, note that the PVC storage utilization is now uniform across all 4 Kafka broker stateful pods.
+15. Upon successful rebalancing, note that the persistent volume storage utilization of all 4 Kafka broker stateful pods, is now converging.
 <img width="1431" alt="image" src="https://github.com/user-attachments/assets/58da1206-6a33-4d38-824a-fc3b915227e0" />
 
 
