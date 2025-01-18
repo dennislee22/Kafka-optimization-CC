@@ -3,7 +3,7 @@
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/cfba1b73-fe26-4484-8d88-b4c9eb52d502" />
 
 In my previous [article](https://github.com/dennislee22/Strimzi-Prometheus), I demonstrated how Strimzi/Kafka can leverage Prometheus and Grafana for monitoring and visualizing cluster metrics, providing real-time insights into performance and health. Building on that, this article focuses on Kafka optimization using `Cruise Control`, a tool designed for intelligent resource balancing for Kafka. Cruise Control ensures optimal disk, CPU, and network utilization by leveraging anomaly detection to identify and alert on irregularities, allowing for timely intervention before issues escalate. It generates multi-goal rebalance proposals that account for factors like rack-awareness and uneven resource utilization, minimizing disruption during rebalancing.
-In this article, I will demonstrate how Cruise Control can efficiently handle resource balancing by adding a Kafka broker to the existing `KafkaNodePool` cluster.
+In this article, I will demonstrate how Cruise Control can efficiently handle resource balancing by adding a Kafka broker to the existing `KafkaNodePool` cluster running in the K8s platform.
 
 # KafkaNodePool Cluster
 
