@@ -16,11 +16,14 @@ my-cluster-cruise-control-6469cd5c74-82hlm    1/1     Running   0             12
 my-cluster-entity-operator-785876bcff-bt6nn   2/2     Running   0             34h
 my-cluster-nodepool-1-0                       1/1     Running   0             16h
 my-cluster-nodepool-1-1                       1/1     Running   0             16h
-my-cluster-nodepool-1-2                       1/1     Running   0             8m21s
-my-cluster-nodepool-1-3                       1/1     Running   0             12h
+my-cluster-nodepool-1-2                       1/1     Running   0             16h
 my-cluster-zookeeper-0                        1/1     Running   0             40h
 my-cluster-zookeeper-1                        1/1     Running   0             40h
 my-cluster-zookeeper-2                        1/1     Running   0             40h
+
+# kubectl -n dlee-kafkanodepool get kafkanodepool
+NAME         DESIRED REPLICAS   ROLES        NODEIDS
+nodepool-1   3                  ["broker"]   [0,1,2]
 ```
 
 2. Create a topic with 3 partitions and 2 replicas by running the embedded `kafka-topics.sh` tool inside one of the Kafka broker pods. 
